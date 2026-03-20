@@ -50,8 +50,8 @@ class TaskControllerTest {
 
         // Act + Assert
         mockMvc.perform(post("/api/v1/task")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(newTask)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(newTask)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.title").value(matchesPattern("Learn about.*request/response")))
                 .andExpect(jsonPath("$.description").value(containsString("Learn how to")))
@@ -76,8 +76,8 @@ class TaskControllerTest {
 
         // Act + Assert
         mockMvc.perform(post("/api/v1/task")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(newTask)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(newTask)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.title").value(matchesPattern("Learn about.*request/response")))
                 .andExpect(jsonPath("$.description").value(containsString("Learn how to")))

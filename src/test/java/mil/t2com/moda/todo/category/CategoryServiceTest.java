@@ -6,6 +6,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -27,19 +29,34 @@ class CategoryServiceTest {
     @Test
     void shouldSaveNewCategory() {
         // Arrange
-        Category newCategory = new Category("delayed");
+        Category newCategory = new Category("Delayed");
         newCategory.setId(1L);
 
         // Act
         when(categoryRepository.save(newCategory)).thenReturn(newCategory);
-
         Category result = categoryService.saveCategory(newCategory);
 
         // Assert
         assertThat(result.getId()).isEqualTo(1L);
-        assertThat(result.getLabel()).isEqualTo("delayed");
+        assertThat(result.getLabel()).isEqualTo("Delayed");
 
         verify(categoryRepository, only()).save(newCategory);
+    }
+
+    @Test
+    void shouldFindTaskByLabel(){
+        // Arrange
+        Category newCategory = new Category("delayed");
+        newCategory.setId(1L);
+
+        // Act
+        when(categoryRepository.findByLabel(newCategory.getLabel())).thenReturn(java.util.Optional.of(newCategory));
+        Optional<Category> result = categoryService.findCategoryByLabel(newCategory.getLabel());
+
+        // Assert
+        assertThat(result.get().getLabel()).isEqualTo("delayed");
+        verify(categoryRepository, only()).findByLabel(newCategory.getLabel());
+
     }
 
 }
