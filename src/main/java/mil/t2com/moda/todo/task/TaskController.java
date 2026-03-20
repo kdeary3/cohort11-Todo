@@ -29,7 +29,9 @@ public class TaskController {
 //    }
 
     @GetMapping()
-    public List<Task> findAllTasks() { return taskService.findAllTasks(); }
+    public List<Task> findAllTasks() {
+        return taskService.findAllTasks();
+    }
 
     // ADD with Tests for: GetById, Put, Delete
 

@@ -16,9 +16,21 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
-    public Optional<Category> findCategoryByLabel(String label){
+    public Category createCategoryIfNotExists(String label) {
+        Optional<Category> queryCategory = categoryRepository.findByLabel(label) ;
+
+        if ( queryCategory.isEmpty() ) {
+            return categoryRepository.save(new Category(label));
+        } else {
+            return queryCategory.get() ;
+        }
+
+    }
+
+    public Optional<Category> findCategoryByLabel(String label) {
         return categoryRepository.findByLabel(label);
     }
+
 
     // ADD with Tests for: GetById, Put, Delete
 

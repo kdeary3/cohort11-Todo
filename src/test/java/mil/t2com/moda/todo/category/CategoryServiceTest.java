@@ -1,5 +1,6 @@
 package mil.t2com.moda.todo.category;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,35 +21,35 @@ class CategoryServiceTest {
     @InjectMocks
     CategoryService categoryService;
 
+    Category newCategory;
+
     // Start using when refactoring
-//    @BeforeEach
+    @BeforeEach
+    void setUp() {
+        // Arrange
+        newCategory = new Category("delayed");
+        newCategory.setId(1L);
+    }
+
 //    void setUp() {
     ////        MockitoAnnotations.openMocks(this);
 //    }
 
     @Test
     void shouldSaveNewCategory() {
-        // Arrange
-        Category newCategory = new Category("Delayed");
-        newCategory.setId(1L);
-
         // Act
         when(categoryRepository.save(newCategory)).thenReturn(newCategory);
         Category result = categoryService.saveCategory(newCategory);
 
         // Assert
         assertThat(result.getId()).isEqualTo(1L);
-        assertThat(result.getLabel()).isEqualTo("Delayed");
+        assertThat(result.getLabel()).isEqualTo("delayed");
 
         verify(categoryRepository, only()).save(newCategory);
     }
 
     @Test
     void shouldFindTaskByLabel(){
-        // Arrange
-        Category newCategory = new Category("delayed");
-        newCategory.setId(1L);
-
         // Act
         when(categoryRepository.findByLabel(newCategory.getLabel())).thenReturn(java.util.Optional.of(newCategory));
         Optional<Category> result = categoryService.findCategoryByLabel(newCategory.getLabel());
@@ -58,5 +59,20 @@ class CategoryServiceTest {
         verify(categoryRepository, only()).findByLabel(newCategory.getLabel());
 
     }
+
+    @Test
+    void shouldCheckIfExistingCategoryAndSaveIfNotExists() {
+        // Act
+        when(categoryRepository.findByLabel(newCategory.getLabel())).thenReturn(Optional.empty());
+        when(categoryRepository.save(any(Category.class))).thenReturn(newCategory);
+
+        Category result = categoryService.createCategoryIfNotExists("delayed");
+        // Assert
+        assertThat(result.getLabel()).isEqualTo("delayed");
+
+        verify(categoryRepository, times(1)).save(any(Category.class));
+        verify(categoryRepository, times(1)).findByLabel("delayed");
+    }
+
 
 }
