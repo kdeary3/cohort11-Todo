@@ -39,3 +39,4 @@ bin/
 #### Database files ####
 .java-version
 /postgres-data/
+node_modules
