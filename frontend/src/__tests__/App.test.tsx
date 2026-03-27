@@ -25,6 +25,7 @@ describe('App.tsx', () => {
         expect(screen.getByRole('button',{name: /0/i})).toBeVisible()
         await user.click(button)
         expect(screen.getByRole('button',{name: /1/i})).toBeVisible()
+    });
 
-    })
+
 });
