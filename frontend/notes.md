@@ -6,7 +6,7 @@ Frontend:
 
 Testing setups ```(vitest.dev/guide)```:
 
-1. ```yarn add -D @testing-library/react @testing-library/jest-dom jsdom @testing-library/dom``` -D makes it a dev dependency (doesn't go to end user) rather than a regular dependency 
+1. ```yarn add -D @testing-library/react @testing-library/jest-dom jsdom @testing-library/dom @testing-library/user-event``` -D makes it a dev dependency (doesn't go to end user) rather than a regular dependency 
 
 1. config ```vite.config.ts```
     ```
