@@ -1,10 +1,14 @@
 import React from "react";
+import type {Task} from "./TaskType.ts";
 
-const TaskItem = () => {
+type TaskProps = {
+    initialTask : Task
+}
+
+export const TaskItem = ({initialTask}: TaskProps) => {
     return(
         <ul>
-            <li aria-label={"Task 1"}>Task 1</li>
+            <li aria-label="Task 1">{initialTask.title}: {initialTask.description}</li>
         </ul>
     );
 };
-export default TaskItem;
