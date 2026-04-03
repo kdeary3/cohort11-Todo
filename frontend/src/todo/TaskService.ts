@@ -1,0 +1,16 @@
+import type {Task} from "./TaskType.ts";
+import axios, {type AxiosResponse} from "axios"
+
+type GetTasks = () => Promise<Task[]>
+type AxiosGetTasks = () => Promise<Task[]>
+
+export const getAllTasks: GetTasks = async () => {
+    return fetch('/api/v1/task', {method: 'GET'}).then(Response => {
+        return Response.json()
+    })
+}
+
+export const axiosGetAllTasks: AxiosGetTasks = async () => {
+    return axios.get<Task[]>('/api/v1/task')
+        .then((response: AxiosResponse<Task[]>) => response.data)
+}
