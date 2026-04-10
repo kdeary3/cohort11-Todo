@@ -10,7 +10,7 @@ export const getAllTasks: GetTasks = async () => {
     })
 }
 
-export const axiosGetAllTasks: AxiosGetTasks = async () => {
-    return axios.get<Task[]>('/api/v1/task')
-        .then((response: AxiosResponse<Task[]>) => response.data)
-}
+export const axiosGetAllTasks: AxiosGetTasks = async () => (
+    axios.get<Task[]>('/api/v1/task')
+        .then((response: AxiosResponse<Task[]>) => response.data).catch()
+)

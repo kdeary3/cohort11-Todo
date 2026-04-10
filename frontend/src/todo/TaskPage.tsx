@@ -1,7 +1,7 @@
 import {TaskItem} from "./TaskItem.tsx";
 import type {Task} from "./TaskType.ts";
 import {useEffect, useState} from "react";
-import {axiosGetAllTasks, getAllTasks} from "./TaskService.ts";
+import {axiosGetAllTasks} from "./TaskService.ts";
 
 const TaskPage = () => {
     const [tasks, setTasks] = useState<Task[]>([])
@@ -17,14 +17,14 @@ const TaskPage = () => {
     return (
         <>
             <h1>Task List</h1>
-            <ul>
-                {tasks.map(task => {
+            <ul> {Array.isArray(tasks) ? (
+                tasks.map(task => {
                         return <TaskItem
                             key={task.id}
                             initialTask={task}
                         />
                     }
-                )}
+                )) : <div>No tasks found.</div> }
             </ul>
         </>
     );
