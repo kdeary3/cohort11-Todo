@@ -1,13 +1,13 @@
-import { render, screen, within } from '@testing-library/react';
-import { expect } from 'vitest';
-import { TaskPage } from '../TaskPage';
+import {render, screen, within} from '@testing-library/react';
+import {expect} from 'vitest';
+import {TaskPage} from '../TaskPage';
 import * as taskApi from '../TaskService.ts';
 
 vi.mock('../TaskService.ts');
 
 const mockData = [
-    { id: 1, title: 'First Task', description: 'get task component built.' },
-    { id: 2, title: 'Second Task', description: 'use new task component.' },
+    {id: 1, title: 'First Task', description: 'get task component built.'},
+    {id: 2, title: 'Second Task', description: 'use new task component.'},
 ];
 
 describe('Task Page', () => {
@@ -16,16 +16,16 @@ describe('Task Page', () => {
         vi.mocked(taskApi.axiosGetAllTasks).mockResolvedValue(mockData);
     });
 
-    it('should display task heading', () => {
-        render(<TaskPage />);
+    it('should display task heading', async () => {
+        render(<TaskPage/>);
+        await screen.findByRole('list');
 
-        expect(
-            screen.getByRole('heading', { name: /Task List/i }),
+        expect(screen.getByRole('heading', {name: /Task List/i}),
         ).toBeInTheDocument();
     });
 
     it('should show multiple tasks', async () => {
-        render(<TaskPage />);
+        render(<TaskPage/>);
 
         // Wait for async data to render
         const list = await screen.findByRole('list');
@@ -38,7 +38,7 @@ describe('Task Page', () => {
     });
 
     it('should show multiple tasks and find the first task', async () => {
-        render(<TaskPage />);
+        render(<TaskPage/>);
 
         // Wait for async data to render
         const list = await screen.findByRole('list');
